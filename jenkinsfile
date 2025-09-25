@@ -3,7 +3,7 @@ pipeline{
     stages{
         stage("Checkout") {
             steps{
-                git branch : 'main', url: 'github.com/siddha200340/docker-learning.git'
+                git branch : 'master', url: 'github.com/siddha200340/docker-learning.git'
             }
         }
         stage("Build") {
