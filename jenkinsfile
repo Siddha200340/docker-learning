@@ -1,0 +1,20 @@
+pipeline{
+    agent any 
+    stages{
+        stage("Checkout") {
+            steps{
+                git branch : 'main', url: 'github.com/siddha200340/docker-learning.git'
+            }
+        }
+        stage("Build") {
+            steps {
+                bash "docker build -t docker-learning ."
+            }
+        }
+        stage("Run") {
+            steps {
+                bash "docker run -d -p 5000:5000 --name docker-learning-container docker-learning"
+            }
+        }
+    }
+}
