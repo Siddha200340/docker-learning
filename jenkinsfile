@@ -20,8 +20,7 @@ pipeline{
         }
         stage("Run") {
             steps {
-                bat "docker rm -f ${params.Container_Name}  || true"
-                bat "docker run -d -p ${params.PORT}:${params.PORT} --name ${params.Container_Name} ${params.Image_Name}"
+                bat "docker compose up -d --build"
             }
         }
     }
