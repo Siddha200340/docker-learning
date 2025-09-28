@@ -1,21 +1,33 @@
 pipeline{
     agent any 
+    parameters {
+        string(name: 'BRANCH_NAME', defaultValue: 'master', description: 'Branch to build from')
+        string(name: 'REPO_URL', defaultValue: 'https://github.com/siddha200340/docker-learning.git', description: 'Git Repository Url')
+        string(name: 'Image_Name', defaultValue: 'docker-learning', description: 'Docker Image Name')
+        string(name: 'Container_Name', defaultValue: 'docker-learning-container', description: 'Docker Container Name')
+        string(name: 'PORT', defaultValue: '5000', description: 'Port to run the application')
+    }
     stages{
         stage("Checkout") {
             steps{
-                git branch : 'master', url: 'https://github.com/siddha200340/docker-learning.git'
+                git branch: "${params.BRANCH_NAME}", url: "${params.REPO_URL}"
             }
         }
         stage("Build") {
             steps {
-                bat "docker build -t docker-learning ."
+                bat "docker build -t ${params.Image_Name} ."
             }
         }
         stage("Run") {
             steps {
-                bat "docker rm -f docker-learning-container || true"
-                bat "docker run -d -p 5000:5000 --name docker-learning-container docker-learning"
+                bat "docker rm -f ${params.Container_Name}  || true"
+                bat "docker run -d -p ${params.PORT}:${params.PORT} --name ${params.Container_Name} ${params.Image_Name}"
             }
+        }
+    }
+    post {
+        always {
+            bat "docker ps -a"
         }
     }
 }
