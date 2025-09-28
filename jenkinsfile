@@ -8,12 +8,12 @@ pipeline{
         }
         stage("Build") {
             steps {
-                bash "docker build -t docker-learning ."
+                bat "docker build -t docker-learning ."
             }
         }
         stage("Run") {
             steps {
-                bash "docker run -d -p 5000:5000 --name docker-learning-container docker-learning"
+                bat "docker run -d -p 5000:5000 --name docker-learning-container docker-learning"
             }
         }
     }
