@@ -20,6 +20,7 @@ pipeline{
         }
         stage("Run") {
             steps {
+                bat "docker rm -f ${params.Container_Name}"
                 bat "docker compose up -d --build"
             }
         }
