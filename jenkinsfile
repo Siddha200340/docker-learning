@@ -13,6 +13,7 @@ pipeline{
         }
         stage("Run") {
             steps {
+                bat "docker rm -f docker-learning-container || true"
                 bat "docker run -d -p 5000:5000 --name docker-learning-container docker-learning"
             }
         }
